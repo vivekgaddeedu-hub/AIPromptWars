@@ -1,0 +1,115 @@
+import { RoadmapInitiative } from '@/types';
+
+export const ROADMAP_INITIATIVES: RoadmapInitiative[] = [
+  {
+    id: 'INIT-01',
+    month: 1,
+    monthLabel: 'Month 1',
+    initiative: 'Architecture & WhatsApp Merchant Bot Core Engine',
+    category: 'Product & Tech',
+    costINR: 400000,
+    owner: 'AI Product Architect & Backend Lead',
+    kpi: 'Sub-3s WhatsApp stock sync latency; pilot schema readiness',
+    expectedOutcome:
+      'Store owners can update inventory or toggle "Sold Out" via simple WhatsApp voice note or 1-tap message without opening an app.',
+    dependency: 'Existing catalog database & WhatsApp Cloud API sandbox',
+    status: 'In Progress',
+  },
+  {
+    id: 'INIT-02',
+    month: 2,
+    monthLabel: 'Month 2',
+    initiative: 'Merchant PWA "Rush Mode" & Bangalore 50-Store Pilot',
+    category: 'Store Operations',
+    costINR: 450000,
+    owner: 'City Operations Lead & UX Designer',
+    kpi: 'Store order rejection rate drops from 23% to <8% in pilot cohort',
+    expectedOutcome:
+      'Merchants get 1-tap "Rush Pause" and automated low-stock warnings during peak walk-in rush, eliminating abrupt cancellations.',
+    dependency: 'INIT-01 (WhatsApp Bot & Core API)',
+    status: 'Planned',
+  },
+  {
+    id: 'INIT-03',
+    month: 3,
+    monthLabel: 'Month 3',
+    initiative: 'Dynamic Sister-Store Routing & 1-Tap Customer Substitution',
+    category: 'Product & Tech',
+    costINR: 450000,
+    owner: 'Full-Stack Engineer & Logistics PM',
+    kpi: 'Cancellations due to unavailable items drop from 35% to <12%',
+    expectedOutcome:
+      'When an item is depleted at one shop, nearby sister stores within 1.5km fulfill the item seamlessly; customers get 1-tap approval.',
+    dependency: 'INIT-02 (Store catalog telemetry)',
+    status: 'Planned',
+  },
+  {
+    id: 'INIT-04',
+    month: 4,
+    monthLabel: 'Month 4',
+    initiative: '3-Order Multi-Category Habit Loop & Neighborhood Bundles',
+    category: 'Growth & Retention',
+    costINR: 400000,
+    owner: 'Growth PM & Product Strategist',
+    kpi: '2nd-order conversion rises from 31% to 48%; 3-order repeat reaches 72%',
+    expectedOutcome:
+      'Shift marketing burn from blanket discount vouchers into targeted cross-category local passes (e.g. Morning Bakery + Grocery pass).',
+    dependency: 'INIT-03 (Fulfillment reliability threshold)',
+    status: 'Planned',
+  },
+  {
+    id: 'INIT-05',
+    month: 5,
+    monthLabel: 'Month 5',
+    initiative: 'Multi-City Rollout: Mumbai & Delhi NCR Onboarding (350 Stores)',
+    category: 'Store Operations',
+    costINR: 400000,
+    owner: 'Regional Merchant Managers (Mumbai & Delhi)',
+    kpi: '350 merchant sign-ups, >85% daily active bot engagement',
+    expectedOutcome:
+      'Scale smart-sync across Bandra, Colaba, Defence Colony, and Gurgaon; store churn risk drops from 18% to <5%.',
+    dependency: 'INIT-02 & INIT-04 playbooks',
+    status: 'Planned',
+  },
+  {
+    id: 'INIT-06',
+    month: 6,
+    monthLabel: 'Month 6',
+    initiative: 'Unified Support-Refund Bridge & Network Optimization (620 Stores)',
+    category: 'Catalog & AI',
+    costINR: 250000,
+    owner: 'Support Operations & Data Analyst',
+    kpi: 'Support resolution time drops from 9.2 hrs to <15 mins; tickets halved',
+    expectedOutcome:
+      'Integrate orders, refunds, and store chat into a single automated resolution pipeline with instant wallet credit for substitutes.',
+    dependency: 'INIT-03 & INIT-05',
+    status: 'Planned',
+  },
+  {
+    id: 'INIT-07',
+    month: 6,
+    monthLabel: 'Month 1-6',
+    initiative: 'Infrastructure, Cloud Messaging & Contingency Reserve',
+    category: 'Governance',
+    costINR: 150000,
+    owner: 'Finance & DevOps Lead',
+    kpi: 'Zero budget overrun; 99.9% uptime for WhatsApp/PWA edge endpoints',
+    expectedOutcome:
+      'Covers WhatsApp conversation fees, Vercel/Supabase edge hosting, automated test pipelines, and emergency buffer.',
+    dependency: 'None',
+    status: 'Planned',
+  },
+];
+
+export const BUDGET_BREAKDOWN = {
+  totalBudgetINR: 2500000,
+  spentPlannedINR: 2500000,
+  remainingINR: 0,
+  categories: [
+    { name: 'Product Engineering & Backend (INIT-01, 03)', amount: 850000, pct: 34.0, color: '#6366f1' },
+    { name: 'Store Operations & Field Pilot (INIT-02, 05)', amount: 850000, pct: 34.0, color: '#10b981' },
+    { name: 'Growth, Retention & Habit Loops (INIT-04)', amount: 400000, pct: 16.0, color: '#f59e0b' },
+    { name: 'Support System Integration (INIT-06)', amount: 250000, pct: 10.0, color: '#8b5cf6' },
+    { name: 'Cloud Infra & Contingency Reserve (INIT-07)', amount: 150000, pct: 6.0, color: '#06b6d4' },
+  ],
+};
