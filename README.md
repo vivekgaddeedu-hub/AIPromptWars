@@ -60,6 +60,32 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
+## 🐳 Docker & Google Cloud Run Deployment
+
+The application features a production-ready multi-stage `Dockerfile` and `cloudbuild.yaml` using Next.js standalone output.
+
+### Container Configuration:
+- **Port:** Listens on `PORT=3000`, `HOSTNAME=0.0.0.0` (fully compatible with Google Cloud Run auto-port mapping).
+- **Security:** Operates under a dedicated non-root `nextjs` user (`uid: 1001`).
+- **Minimal Image Size:** Copies only `.next/standalone`, static assets, and minimal Node 20 runtime.
+
+### Local Docker Testing:
+```bash
+# Build production container image
+docker build -t novanexus-test .
+
+# Run container locally
+docker run --rm -p 3000:3000 novanexus-test
+```
+
+### Google Cloud Build & Cloud Run:
+- **Cloud Build Configuration:** [`cloudbuild.yaml`](file:///Users/sudheergadde/Desktop/PromptWars/cloudbuild.yaml)
+- **Artifact Registry Image:** `${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:latest`
+- **Environment Variables:**
+  - `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`: *(Optional)* Configure in Cloud Run Environment Variables or Cloud Build `--build-arg`. If omitted, the application runs smoothly in zero-crash "Google Maps unavailable — Demo Mode".
+
+---
+
 ## 🧭 Application Modules & Navigation
 
 The platform features 11 integrated modules accessible via the top navigation bar:

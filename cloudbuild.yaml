@@ -1,0 +1,42 @@
+# Google Cloud Build configuration for NOVA NEXUS Next.js Standalone
+# Builds Docker image and pushes to Artifact Registry
+
+steps:
+  # 1. Build the production Docker container using multi-stage Dockerfile
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-image'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:latest'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${COMMIT_SHA}'
+      - '.'
+
+  # 2. Push the container image to Google Artifact Registry (:latest)
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-image-latest'
+    args:
+      - 'push'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:latest'
+
+  # 3. Push the container image to Google Artifact Registry (:$COMMIT_SHA)
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-image-sha'
+    args:
+      - 'push'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${COMMIT_SHA}'
+
+# Store image artifacts in Artifact Registry
+images:
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:latest'
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${COMMIT_SHA}'
+
+# Default substitutions (can be overridden by Cloud Build Trigger variables)
+substitutions:
+  _REGION: 'asia-south1'
+  _REPOSITORY: 'aipromptwars'
+  _IMAGE: 'aipromptwars'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

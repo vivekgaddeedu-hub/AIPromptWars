@@ -1,0 +1,20 @@
+# Dependency and build caches
+node_modules
+.next
+.git
+.github
+
+# Testing and coverage artifacts
+coverage
+playwright-report
+test-results
+
+# Environment and secrets
+.env
+.env.local
+.env*.local
+
+# System and logs
+*.log
+.DS_Store
+*.tsbuildinfo
