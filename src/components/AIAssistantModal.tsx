@@ -201,7 +201,7 @@ export function AIAssistantModal({ isOpen, onClose, setActiveTab }: AIAssistantM
           </div>
 
           {/* Right Column: Reasoning & Evidence Display */}
-          <div className="md:col-span-7 p-6 overflow-y-auto space-y-5 bg-slate-900/50">
+          <div className="md:col-span-7 p-6 overflow-y-auto space-y-5 bg-slate-900/50" aria-live="polite" aria-atomic="true">
             {/* Question title & short answer */}
             <div>
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">

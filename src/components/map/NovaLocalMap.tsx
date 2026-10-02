@@ -101,12 +101,17 @@ export function NovaLocalMap({ onNavigateTab }: NovaLocalMapProps) {
             },
           });
 
+          const safeName = store.name.replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m] || m));
+          const safeCategory = store.category.replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m] || m));
+          const safeLocality = store.locality.replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m] || m));
+          const safeRisk = store.phantomStockRisk.replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m] || m));
+
           const infoWindow = new google.maps.InfoWindow({
             content: `
               <div style="color: #0f172a; padding: 6px; font-family: sans-serif; font-size: 12px;">
-                <strong>${store.name}</strong><br/>
-                <span>${store.category} • ${store.locality}</span><br/>
-                <span style="color: ${markerColor}; font-weight: bold;">Risk: ${store.phantomStockRisk}</span>
+                <strong>${safeName}</strong><br/>
+                <span>${safeCategory} • ${safeLocality}</span><br/>
+                <span style="color: ${markerColor}; font-weight: bold;">Risk: ${safeRisk}</span>
               </div>
             `,
           });
@@ -317,7 +322,7 @@ export function NovaLocalMap({ onNavigateTab }: NovaLocalMapProps) {
         </div>
 
         {/* Right Column: Active Store Deep-Dive & Sister-Store Alternatives */}
-        <div className="lg:col-span-5 bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-5">
+        <div className="lg:col-span-5 bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-5" aria-live="polite" aria-atomic="true">
           {/* Selected Store Profile */}
           <div className="border-b border-slate-800 pb-4">
             <div className="flex items-center justify-between">

@@ -79,6 +79,40 @@ export function RecommendationsTab({ onNavigateTab }: RecommendationsTabProps) {
         </div>
       </div>
 
+      {/* 5-Step Strategic Evidence Chain */}
+      <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-4 text-xs space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-medium">
+            Strategic Causal Chain (Evidence &rarr; Action &rarr; Projected Metric)
+          </span>
+          <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-800/40 px-2 py-0.5 rounded">
+            Epistemologically Verified
+          </span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-2 pt-1 font-mono text-[11px]">
+          <div className="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+            <span className="text-[9px] uppercase tracking-wider text-emerald-400 font-bold block mb-1">1. EVIDENCE [FACT]</span>
+            <p className="text-slate-300 font-sans text-[11px] leading-snug">35% unavailable stock + 18% peak walk-in rush rejections.</p>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+            <span className="text-[9px] uppercase tracking-wider text-amber-400 font-bold block mb-1">2. PROBLEM [INFERENCE]</span>
+            <p className="text-slate-300 font-sans text-[11px] leading-snug">Catalog staleness &amp; merchant rush overload triggers user churn.</p>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+            <span className="text-[9px] uppercase tracking-wider text-purple-400 font-bold block mb-1">3. HYPOTHESIS [H1]</span>
+            <p className="text-slate-300 font-sans text-[11px] leading-snug">Automated sync + rush throttling protects 53% cancellations.</p>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+            <span className="text-[9px] uppercase tracking-wider text-indigo-400 font-bold block mb-1">4. INTERVENTION</span>
+            <p className="text-slate-300 font-sans text-[11px] leading-snug">WhatsApp Sentinel + Rush Throttling + 3-Order Habit Loops.</p>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+            <span className="text-[9px] uppercase tracking-wider text-cyan-400 font-bold block mb-1">5. METRIC [MODELED]</span>
+            <p className="text-slate-300 font-sans text-[11px] leading-snug">Cancellations drop 11% &rarr; 4.2%; Repeat rises 27% &rarr; 38.4%.</p>
+          </div>
+        </div>
+      </div>
+
       {/* 3 Pillar Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Pillar 1: Store Inventory Sentinel */}

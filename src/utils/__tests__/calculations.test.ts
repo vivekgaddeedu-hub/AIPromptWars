@@ -42,6 +42,18 @@ describe('NOVA CART Business Calculations & Pure Logic', () => {
       expect(result.riskLevel).toBe('HIGH');
       expect(result.riskScore).toBeGreaterThanOrEqual(0);
     });
+
+    it('should format default repeat rate fallback when 0 is supplied', () => {
+      const result = calculateRetentionRisk(0, 0, 0);
+      expect(result.riskLevel).toBe('HIGH');
+      expect(result.reason).toContain('27.0%');
+    });
+
+    it('should reflect custom repeat rate in reason when non-zero rate is passed', () => {
+      const result = calculateRetentionRisk(0, 35.5, 0);
+      expect(result.riskLevel).toBe('HIGH');
+      expect(result.reason).toContain('35.5%');
+    });
   });
 
   describe('calculateStoreRisk', () => {
@@ -120,6 +132,32 @@ describe('NOVA CART Business Calculations & Pure Logic', () => {
       expect(['EXCELLENT', 'STABLE']).toContain(projected.status);
       expect(projected.healthScore).toBeGreaterThan(70);
     });
+
+    it('should assign EXCELLENT status when health score is >= 80', () => {
+      const res = calculateBusinessHealth(2.0, 44.0, 22.0, 1500);
+      expect(res.status).toBe('EXCELLENT');
+      expect(res.healthScore).toBeGreaterThanOrEqual(80);
+    });
+
+    it('should assign STABLE status when health score is between 60 and 79', () => {
+      const res = calculateBusinessHealth(6.0, 35.0, 28.0, 3200);
+      expect(res.status).toBe('STABLE');
+      expect(res.healthScore).toBeGreaterThanOrEqual(60);
+      expect(res.healthScore).toBeLessThan(80);
+    });
+
+    it('should assign DEGRADED status when health score is between 40 and 59', () => {
+      const res = calculateBusinessHealth(8.0, 30.0, 32.0, 4500);
+      expect(res.status).toBe('DEGRADED');
+      expect(res.healthScore).toBeGreaterThanOrEqual(40);
+      expect(res.healthScore).toBeLessThan(60);
+    });
+
+    it('should assign CRITICAL status when health score is < 40', () => {
+      const res = calculateBusinessHealth(14.0, 20.0, 42.0, 6500);
+      expect(res.status).toBe('CRITICAL');
+      expect(res.healthScore).toBeLessThan(40);
+    });
   });
 
   describe('calculateProjectedImpact', () => {
@@ -188,6 +226,12 @@ describe('NOVA CART Business Calculations & Pure Logic', () => {
       expect(compliance.isCompliant).toBe(false);
       expect(compliance.overrunAmount).toBe(300000);
     });
+
+    it('should return 0 when budget initiatives list is empty or null', () => {
+      expect(calculateBudgetTotal([])).toBe(0);
+      expect(calculateBudgetTotal(null as unknown as { costINR: number }[])).toBe(0);
+      expect(calculateBudgetTotal([{ costINR: 1000 }, { costINR: 0 }])).toBe(1000);
+    });
   });
 
   describe('calculateStoreDistance (Haversine)', () => {
@@ -211,6 +255,12 @@ describe('NOVA CART Business Calculations & Pure Logic', () => {
       expect(mumbai.every((s) => s.city === 'Mumbai')).toBe(true);
     });
 
+    it('should filter stores by retail category correctly', () => {
+      const bakeries = filterStores(SAMPLE_STORES, 'All', 'Bakery & Patisserie', 'All', '');
+      expect(bakeries.length).toBeGreaterThan(0);
+      expect(bakeries.every((s) => s.category === 'Bakery & Patisserie')).toBe(true);
+    });
+
     it('should filter stores by risk level', () => {
       const critical = filterStores(SAMPLE_STORES, 'All', 'All', 'Critical', '');
       expect(critical.every((s) => s.phantomStockRisk === 'Critical')).toBe(true);
@@ -220,6 +270,11 @@ describe('NOVA CART Business Calculations & Pure Logic', () => {
       const matches = filterStores(SAMPLE_STORES, 'All', 'All', 'All', 'theobroma');
       expect(matches.length).toBe(1);
       expect(matches[0].name).toContain('Theobroma');
+    });
+
+    it('should safely return empty array when store collection is empty or null', () => {
+      expect(filterStores([], 'All')).toEqual([]);
+      expect(filterStores(null as unknown as typeof SAMPLE_STORES, 'All')).toEqual([]);
     });
   });
 

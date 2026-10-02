@@ -278,7 +278,7 @@ export function SimulatorTab({ onNavigateTab }: SimulatorTabProps) {
             </div>
 
             {/* 4 Outcome Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3" aria-live="polite" aria-atomic="true">
               <div className="p-3 bg-slate-950/80 rounded-xl border border-slate-800">
                 <span className="text-[10px] text-slate-400 uppercase font-mono block">Repeat Rate</span>
                 <span className="text-lg font-bold text-emerald-400 font-mono mt-0.5 block">
